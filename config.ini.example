@@ -1,0 +1,48 @@
+[DEFAULT]
+DigitalTwinIdentifier = dt1
+WarmUpPeriodInDays = 0
+RunLength = 365
+TimeZone = EST
+PersistenceType = SQL
+DefaultToEPW = true
+bldg_latitude = 42.65
+bldg_longitude = -73.75
+bldg_altitude = 80
+bldg_tz = America/New_York
+
+[CONFIGURATIONFILES]
+SignalsFile = signals.csv
+SensorsFile = sensors.csv
+ActuatorsFile = actuators.csv
+CustomFile = custom.csv
+OpcDevicesFile = opc_devices.csv
+OpcVariablesFile = opc_variables.csv
+
+[ENERGYPLUS]
+EnergyPlusDirectory = C:\EnergyPlusV23-2-0
+EPWeatherFile = C:\path\to\USA_NY_Albany.County.AP.725180_TMY3.epw
+EPBuildingModel = C:\path\to\your_model.idf
+
+[Seeq]
+SeeqServerURL = https://your-seeq-server.seeq.com          ; Override via SEEQSERVERURL env var if set
+SeeqUser = your.email@domain.com                           ; Override via SEEQUSER
+SeeqPassword = your_password                               ; Override via SEEQPASSWORD (NEVER commit real value!)
+SeeqRequestOrigin = ZEN digital twin
+
+[DATABASE]
+DatabaseType = postgresql
+DatabaseHost = localhost                                   ; Override via DBHOST
+DatabasePort = 5432                                        ; Override via DBPORT
+DatabaseUser = postgres                                    ; Override via DBUSER
+DatabasePass = your_password                               ; Override via DBPASSWORD (NEVER commit!)
+DatabaseName = test_db                                     ; Override via DBNAME
+
+[OPCSERVER]
+OpcServerEnabled = true
+OpcServerName = dt1
+OpcServerUrl = test.url
+ep = opc.tcp://127.0.0.1:4840/opcua/
+uri = http://albany.edu/opcuadt/
+
+[CSVOUT]
+CSVFilename =
