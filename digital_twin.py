@@ -6,6 +6,8 @@ Created on Thu Jun 22 11:27:38 2023
 """
 import sys 
 import os
+from dotenv import load_dotenv
+load_dotenv() Load .env overrides before config
 import pandas as pd
 import configparser
 import datetime
@@ -72,8 +74,13 @@ class DigitalTwin:
         self.custom_callbacks_df = pd.read_csv(custom_path)
         #print(self.custom_callbacks_df)
        
-        #todo create based on reflection and config spec
-        self.persistence_agent = PostgresPersistence(self.config, self.sensors_df)
+        #create our persistence agent
+        if self.config.get('DEFAULT', 'PersistenceType') == 'SQL':
+            from persistence.postgres_persistence_etv import PostgresPersistenceETV
+            self.persistence_agent = PostgresPersistenceETV(self.config, self.sensors_df)
+        else:
+            raise ValueError("Unsupported PersistenceType")    
+        
         #retrieval agent is the object we use to obtain real world signals
         self.retrieval_agent = CoreRetrieval(self.config, self.signals_df)
         #handle OPC UA if active
@@ -182,4 +189,5 @@ if __name__ == "__main__":
     
     
     
+
     
